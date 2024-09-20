@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f5;
+        }
+        .register-container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: auto;
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-group {
+            margin: 10px 0;
+        }
+        input {
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px;
+            width: 100%;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-container">
+        <h2>Create an Account</h2>
+        <form id="register-form">
+            <div class="form-group">
+                <input type="text" id="first-name" placeholder="First Name" required>
+            </div>
+            <div class="form-group">
+                <input type="text" id="last-name" placeholder="Last Name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" id="email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+                <div id="password-error" class="error"></div>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+        <div>
+            <p style="text-align: center;">Already have an account? <a href="login.html">Login here</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('register-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const firstName = document.getElementById('first-name').value.trim();
+            const lastName = document.getElementById('last-name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+
+            document.getElementById('password-error').textContent = '';
+
+            
+            if (password !== confirmPassword) {
+                document.getElementById('password-error').textContent = "Passwords do not match.";
+                return;
+            }
+            if (password.length < 6) {
+                document.getElementById('password-error').textContent = "Password must be at least 6 characters.";
+                return;
+            }
+
+
+            alert(`Registered successfully!\nName: ${firstName} ${lastName}\nEmail: ${email}`);
+        });
+    </script>
+
+</body>
+</html>
+
