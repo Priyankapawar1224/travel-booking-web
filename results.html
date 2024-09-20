@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f5;
+        }
+        .package-details {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        .package-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin: 10px 0;
+        }
+        input, button {
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="package-details" id="package-details"></div>
+
+    <script>
+        const packages = [
+            { id: 1, destination: "Bali", price: 499, rating: 4.5, image: "https://cdn.pixabay.com/photo/2022/08/26/04/19/beach-7411683_1280.jpg", description: "Enjoy beautiful beaches and vibrant nightlife." },
+            { id: 2, destination: "Mountains", price: 699, rating: 4.8, image: "https://cdn.pixabay.com/photo/2014/08/23/10/54/mountain-425134_1280.jpg", description: "Join an exhilarating mountain trek and enjoy breathtaking views." },
+            { id: 3, destination: "Paris", price: 799, rating: 4.7, image: "https://cdn.pixabay.com/photo/2015/10/06/18/26/eiffel-tower-975004_640.jpg", description: "Discover the romantic streets of Paris." },
+            { id: 4, destination: "New York", price: 999, rating: 4.9, image: "https://cdn.pixabay.com/photo/2021/12/09/11/53/empire-state-building-6858030_1280.jpg", description: "Explore the vibrant culture of NYC." },
+            { id: 5, destination: "Tokyo", price: 599, rating: 4.6, image: "https://cdn.pixabay.com/photo/2019/07/14/08/08/night-4336403_1280.jpg", description: "Experience the rich culture and modern attractions of Tokyo." }
+        ];
+
+        function getSearchParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                destination: params.get('destination'),
+            };
+        }
+
+        function displayPackageDetails() {
+            const { destination } = getSearchParams();
+            const packageDetails = packages.find(pkg => pkg.destination.toLowerCase() === destination.toLowerCase());
+
+            if (packageDetails) {
+                document.getElementById('package-details').innerHTML = `
+                    <h2>${packageDetails.destination}</h2>
+                    <img src="${packageDetails.image}" alt="${packageDetails.destination}" class="package-image">
+                    <p>Price: $${packageDetails.price}</p>
+                    <p>Rating: ${packageDetails.rating}</p>
+                    <p>${packageDetails.description}</p>
+                    <h3>Book Now</h3>
+                    <form id="booking-form">
+                        <div class="form-group">
+                            <input type="text" id="traveler-name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="date" id="travel-date" required>
+                        </div>
+                        <button type="submit">Book Now</button>
+                    </form>
+                `;
+
+                // Handle booking form submission
+                document.getElementById('booking-form').addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    const name = document.getElementById('traveler-name').value;
+                    const travelDate = document.getElementById('travel-date').value;
+
+                    if (!travelDate) {
+                        alert('Please select a travel date.');
+                        return;
+                    }
+
+                    alert(`Booking submitted for ${name} on ${travelDate}.`);
+                });
+            } else {
+                document.getElementById('package-details').innerHTML = `<p>No packages found for the selected destination.</p>`;
+            }
+        }
+
+        displayPackageDetails();
+    </script>
+
+</body>
+</html>
