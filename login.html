@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Cake Shop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0f7fa; /* Changed background color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        h2 {
+            color: #00796b; /* Changed heading color */
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #00796b; /* Changed button color */
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background-color: #004d40; /* Changed hover color */
+        }
+        .register-link {
+            display: block;
+            margin-top: 15px;
+            color: #00796b;
+            text-decoration: none;
+        }
+        .register-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        let loginAttempts = 0;
+
+        function validateLogin(event) {
+            event.preventDefault();
+            const password = document.getElementById('password').value;
+            const minPasswordLength = 8;
+
+            // Check if the password is at least 8 characters long
+            if (password.length < minPasswordLength) {
+                alert('Password must be at least 8 characters long.');
+                return;
+            }
+
+       
+            loginAttempts++;
+
+         
+            if (loginAttempts >= 3) {
+                alert('You have reached the maximum login attempts.');
+                document.getElementById('username').disabled = true;
+                document.getElementById('password').disabled = true;
+                document.querySelector('.btn').disabled = true;
+                return;
+            }
+
+            // Since the user can enter any credentials, always consider login successful
+            alert('Login successful!');
+            window.location.href = 'welcome.html'; // Redirect to welcome page
+        }
+
+        function redirectToRegister(event) {
+            event.preventDefault();
+            window.location.href = 'register.html';
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form onsubmit="validateLogin(event)">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn">Login</button>
+            <a href="register.html" class="register-link">Don't have an account? Register</a>
+        </form>
+    </div>
+</body>
+</html>
